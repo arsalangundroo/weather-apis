@@ -7,6 +7,10 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var dataEntryRoute = require('./routes/dataEntryRoute');
+var refreshRoute = require('./routes/refreshRoute');
+var weatherRoute = require('./routes/weatherRoute');
+
+
 var index = require('./routes/index');
 
 var app = express();
@@ -32,6 +36,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/data_entry', dataEntryRoute);
 app.use('/', index);
+app.use('/refresh', refreshRoute);
+app.use('/weather', weatherRoute);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

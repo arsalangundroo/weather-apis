@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var request =require('request');
+var City = require('../DAL/models/city.js'); 
 var mongoose =require('mongoose');
-var mongoosePaginate = require('mongoose-paginate');
 var Schema =mongoose.Schema;
 
 router.route('/data_entry').post(enterData);
@@ -12,7 +12,6 @@ var citySchema =new  Schema({
 	city : String,
 	state : String
 });
-citySchema.plugin(mongoosePaginate);
 
 function enterData(req, res, next) {
 	var options = {};
@@ -21,11 +20,10 @@ function enterData(req, res, next) {
 }
 
 function processAndStoreData(cities){
-    var city = mongoose.model('City',citySchema);
+    var city = new City();
     for(var i in cities){
     cityOb = new city();
     cityOb.city = cities[i].City;
-    cityOb.state = cities[i].State;
     cityOb.save();
     }    
 }
